@@ -1,0 +1,36 @@
+services:
+  solr:
+    image: "solr:9"
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./data:/data
+      - ./scraper/jsons:/scraper/jsons
+      - ./scripts:/scripts
+    command:
+      - solr-precreate
+      - news
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - solr
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,71 @@
+{
+    "add-field-type": [
+        {
+            "name": "urlText",
+            "class": "solr.TextField"
+        },
+        {
+            "name": "naturalLanguageText",
+            "class": "solr.TextField",
+            "indexAnalyzer": {
+                "tokenizer": {
+                    "class": "solr.StandardTokenizerFactory"
+                },
+                "filters": [
+                    { "class": "solr.ASCIIFoldingFilterFactory", "preserveOriginal": "true" },
+                    { "class": "solr.LowerCaseFilterFactory" }
+                ]
+            },
+            "queryAnalyzer": {
+                "tokenizer": {
+                    "class": "solr.StandardTokenizerFactory"
+                },
+                "filters": [
+                    { "class": "solr.ASCIIFoldingFilterFactory", "preserveOriginal": "true" },
+                    { "class": "solr.LowerCaseFilterFactory" }
+                ]
+            }
+        },
+        {
+            "name": "dateField",
+            "class": "solr.DateRangeField"
+        }
+    ],
+    "add-field": [
+        {
+            "name": "url",
+            "type": "urlText",
+            "indexed": false
+        },
+        {
+            "name": "title",
+            "type": "naturalLanguageText",
+            "indexed": true
+        },
+        {
+            "name": "date",
+            "type": "dateField",
+            "indexed": true
+        },
+        {
+            "name": "author",
+            "type": "naturalLanguageText",
+            "indexed": true
+        },
+        {
+            "name": "tags",
+            "type": "naturalLanguageText",
+            "indexed": true
+        },
+        {
+            "name": "contents",
+            "type": "naturalLanguageText",
+            "indexed": true
+        },
+        {
+            "name": "entities",
+            "type": "naturalLanguageText",
+            "indexed": true
+        }
+    ]
+}
